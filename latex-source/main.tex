@@ -1,0 +1,624 @@
+\documentclass[12pt,a4paper,twoside,openright]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+
+%\usepackage{style/isi_style_lt}
+
+
+\usepackage{footnote} % for footnotes
+\usepackage{verbatim} % for \texttt and \textcolor
+
+% Table
+\usepackage{booktabs}
+\usepackage{subcaption}
+
+\usepackage{threeparttable} % notes
+
+\usepackage{times}
+\usepackage{soul}
+\usepackage{pifont}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{caption}
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{arydshln}
+\usepackage{marvosym}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{sectsty}
+\usepackage{subcaption}
+\usepackage{tocloft}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{fdsymbol} % Spades symbol
+\usepackage[numbers]{natbib}
+\usepackage{pgfplots,pgfplotstable}
+\usepackage{ragged2e}
+\usepackage{wrapfig}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{matrix}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[switch]{lineno}
+\usepackage{etoolbox}
+\usepackage{tabularx}
+\usepackage{xparse}
+
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+
+\definecolor{lightviolet}{RGB}{250, 0, 255} % Adjust the RGB values as needed
+\definecolor{darkgreen}{RGB}{0, 200, 0}      % Adjust the RGB values as needed
+\definecolor{darkyellow}{RGB}{255, 204, 0}
+
+\definecolor{bar1}{HTML}{F9E52D}
+\definecolor{bar2}{HTML}{A6D83D}
+\definecolor{bar3}{HTML}{62C06E}
+\definecolor{bar4}{HTML}{43A087}
+\definecolor{bar5}{HTML}{3C7F8E}
+
+ % Colorbox
+% CUSTOM COLORS
+\definecolor{plotbackground}{HTML}{E5ECF6}
+\definecolor{smxmcolor}{HTML}{F72585}
+\definecolor{bloomcolor}{HTML}{9359FA}
+\definecolor{falconcolor}{HTML}{38A0F5}
+\definecolor{llamacolor}{HTML}{59C94A}
+\definecolor{juicercolor}{HTML}{FB8500}
+\usetikzlibrary{pgfplots.fillbetween,patterns}
+
+\usepackage[clock]{ifsym}
+
+%  ----------
+% | COMMANDS |
+%  ----------
+% NEW COMMANDS
+\newcommand{\quotes}[1]{``#1''}
+
+\NewDocumentCommand\universe{}{\scalerel*{\includegraphics{figures/milky-way_1f30c.png}}{X}}
+
+\newcommand\tab[1][.1cm]{\hspace*{#1}}
+
+\newcommand*{\gapsourcebox}[2]{{\small \colorbox{white!#1!green}{\color{black} #2}}}
+\newcommand*{\overlapsourcebox}[2]{{\small \colorbox{#1}{\color{black} #2}}}
+
+\newcommand{\mycomment}[1]{}
+
+\input{jupyter.tex}
+
+\hypersetup{%
+	pdfpagemode={UseOutlines},
+	bookmarksopen,
+	pdfstartview={FitH},
+	colorlinks,
+	linkcolor={black},
+	citecolor={black},
+	urlcolor={black}
+}
+
+\input{style/settings.tex}
+
+
+\title{\LARGE Literature Survey on Synthetic Biometric Data Generation Using Intelligent Systems}
+
+\author{\Large Emanuele Artegiani\\
+emanuele.artegiani@studio.unibo.it\\
+ID: 0001140446}
+
+\date{November 2025}
+
+
+\makeindex
+
+\linespread{1.25}
+
+\begin{document}
+
+%\frontmatter 
+
+\maketitle
+
+% ABSTRACT
+\begin{center}
+    \textbf{Abstract}
+\end{center}
+This literature survey focuses on intelligent systems techniques used to generate \textbf{Synthetic Biometric Data}, in particular \textbf{Fingerprints}. The concern is to identify success in the implementation of design choices, algorithms, and principles used, the benefits of the application, and the challenges encountered. The study aims to derive insights into current trends and potential advancements in Synthetic Fingerprint generation (SFG).
+
+\vspace{5em}
+
+\vspace*{-2\baselineskip}
+\tableofcontents
+
+\newpage
+
+\listoffigures
+
+\newpage
+
+\mainmatter
+
+\pagestyle{fancy} 
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LE,RO]{\thepage}
+\fancyfoot{}
+
+
+
+
+
+\chapter{Introduction}
+Biometric recognition systems, which leverage unique physiological and behavioral traits like fingerprints, faces, irises, and voices for identification and verification, are no longer novelties. They are deeply integrated into the fabric of modern security, from unlocking smartphones to securing international borders and processing financial transactions. The efficacy, fairness, and robustness of these systems are critically dependent on the data used to train and test their underlying machine learning algorithms. However, the reliance on real biometric data has created a significant and persistent bottleneck, fraught with logistical, ethical, and technical challenges.
+
+The collection of large-scale, diverse, and representative datasets of real biometric identifiers is notoriously difficult. It is a process that is not only \textit{expensive and time-consuming} but also governed by a complex web of \textit{privacy regulations}, such as the GDPR\cite{gdpr} and HIPAA\cite{hipaa}. The sensitive nature of biometric data—being an immutable and permanently linked part of an individual's identity—makes its collection, storage, and sharing a matter of significant privacy and security risk. Furthermore, even when data is successfully collected, it often suffers from inherent demographic and environmental biases. Datasets may be skewed, over-representing certain populations while under-representing others, which leads to algorithms that exhibit poor and inequitable performance for minority groups. This lack of data diversity also makes it difficult to test the systems' robustness against rare conditions, adversarial attacks, or environmental variations.
+
+In response to this critical data dilemma, the field has increasingly turned to a powerful alternative: synthetic biometric data generation. This approach involves using advanced generative models, such as Generative Adversarial Networks (GANs)\cite{goodfellow2014generativeadversarialnetworks}, Variational Autoencoders (VAEs)\cite{Kingma_2019}, and, more recently, diffusion models\cite{ho2020denoisingdiffusionprobabilisticmodels}, to create high-fidelity, artificially generated biometric data. This synthetic data is not a simple copy of existing samples; it consists of entirely new, realistic biometric traits that are statistically representative of real data but do not correspond to any real individual.
+
+
+This paradigm shift offers a transformative solution to the aforementioned challenges. It allows researchers and developers to:
+
+Preserve privacy by training models on data that contains no personally identifiable information (PII).
+
+Mitigate bias by synthetically generating balanced datasets with controlled demographic distributions.
+
+Enhance robustness by creating vast and varied datasets that include specific edge cases, environmental noise, spoofing attempts (e.g., "deepfakes"), and presentation attacks for testing.
+
+Accelerate development by generating virtually limitless amounts of data on demand, bypassing the logistical hurdles of real-world data collection.
+
+As the realism and utility of synthetic data continue to improve, its role is expanding from a simple data augmentation technique to a fundamental enabler of next-generation biometric system development, testing, and certification. This literature survey will provide a comprehensive overview of the state-of-the-art in synthetic biometric data generation. It will be systematically reviewed and analyzed the evolution of generative methodologies, assess the techniques used for SFG, and examined the evaluation metrics used to measure the quality, realism, and utility of the generated data.
+
+The principal architectures and techniques used for generating synthetic fingerprints can be collected into the following categories:
+\begin{itemize}
+    \item \textbf{Model-Based Architectures (Classical)}: these "bottom-up" methods follow a multi-stage, rule-based process to explicitly model the anatomical structure of a fingerprint. The typical pipeline for a model-based generator involves:
+    \begin{enumerate}
+        \item \textbf{Singularity and Class Definition}: The process starts by randomly defining the fingerprint class (e.g., Arch, Left Loop, Whorl) and placing the primary singularities (cores and deltas) in valid anatomical positions.
+        \item \textbf{Orientation Field Generation}: A mathematical model generates a directional "flow map" for the ridges, guided by the positions of the cores and deltas.
+        \item \textbf{Ridge Pattern Generation}: A ridge-valley pattern is created, often using Gabor-like filters that are iteratively applied across the image, following the orientation field. This step also generates minutiae (ridge endings and bifurcations) at random, plausible locations.
+        \item \textbf{Noising and Rendering}: This is a critical final stage that adds realism. The "clean" master print is degraded to simulate real-world acquisition. This includes:
+        \begin{itemize}
+            \item Adding random noise, small cuts, and scratches.
+            \item Simulating skin pores.
+            \item Modeling skin plasticity and non-linear distortion (to simulate the finger pressing and rolling on a sensor).
+            \item Adjusting ridge thickness to simulate dry or wet skin.
+        \end{itemize}
+    \end{enumerate}
+
+    \item \textbf{Deep Learning Architectures (Data-Driven)}: These "top-down" methods learn the underlying statistical distribution of real fingerprint images from a large dataset. They generate new samples by sampling from this learned distribution and are known for producing highly realistic and complex textures.
+    The main representatives of this category are as follows:
+    \begin{itemize}
+        \item \textbf{Generative Adversarial Networks (GANs)}: They are the most widely used deep learning technique for this task. A GAN consists of two competing neural networks: a \textit{Generator} that creates fake images and a \textit{Discriminator} that tries to distinguish the fake images from real ones.
+        \item \textbf{Diffusion Models}: These are a newer class of generative models that have proven to be extremely powerful, often surpassing GANs in image quality and diversity. The main implementation is:
+        \begin{itemize}
+            \item \textbf{Denoising Diffusion Probabilistic Models (DDPMs)}: These models work by progressively adding "noise" to a real image until it becomes pure static. They then train a neural network to reverse the process, learning to gradually de-noise the static back into a realistic image.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+Finally, we will discuss the key open challenges, ethical considerations, and future research directions that will shape this rapidly advancing field.
+
+
+\chapter{Method}
+This section details the systematic procedure followed to carry out a comprehensive review of the literature on SFG based on intelligent systems. This methodology intends to follow a systematic review approach, ensuring a comprehensive, unbiased, and reproducible overview of existing research.
+These processes comprise several key stages, including the definition of objectives and research questions, preparation of the search strategy, selection of relevant studies, assessment of the quality of selected studies, and extraction and synthesis of data from the studies.
+
+The Systematic Literature Review (SLR) methodology adopted here is designed to systematically identify, evaluate, and synthesize the existing literature body on SFG techniques and architectures. This principally aims to understand the design choices, algorithms, and principles behind SFG frameworks and to describe their advantages, challenges, and results.
+
+\section{Research Objectives and Questions}
+The primary objective of this literature review is to systematically explore and analyze the methods and utility of SFG in intelligent systems. This involves a detailed examination of the design choices (e.g., GANs, Diffusion Models), algorithms, principles, and frameworks used to create realistic and diverse synthetic fingerprints, as well as an assessment of their benefits and challenges in various application domains such as biometric system evaluation, Presentation Attack Detection (PAD), and bias mitigation.
+
+The main goal of this literature review is to systematically investigate and discuss the applications and technological underpinnings of SFG in intelligent systems. This includes a deeper probing into generative models (e.g., GAN architectures), quality metrics (e.g., NFIQ2), and synthesis frameworks, along with an assessment of their benefits (e.g., privacy, data volume) and challenges (e.g., realism, identity preservation) in critical areas like biometric recognition training and security testing.
+
+To achieve this objective, the following research questions arise:
+\begin{itemize}
+    \item How can high quality synthetic fingerprints be obtained?
+    \item What benefits does SFG provide in the creation of intelligent systems?
+    \item What generalization capabilities a system trained solely on synthetic fingerprints can reach?
+    \item Does synthetic generated datasets affect data privacy?
+\end{itemize}
+
+\section{Search strategy}
+The search strategy was designed to comprehensively identify relevant studies on SFG intelligent systems.
+The electronic databases searched are:
+\begin{itemize}
+    \item Google Scholar
+    \item IEEE Xplore
+    \item Springer Link
+    \item DBLP
+\end{itemize}
+
+The search was conducted using a combination of correlated words combined to \textit{fingerprint generation} (used also alone):
+\begin{itemize}
+    \item Synthetic
+    \item GAN
+    \item VAE
+    \item Diffusion
+\end{itemize}
+
+The search was limited to articles published in English from 2020 to 2025.
+The inclusion and exclusion criteria applied to the search results are presented in the following section.
+
+\section{Study selection}
+The study selection process was conducted in multiple stages to ensure the inclusion of relevant and high-quality studies on SFG.
+\begin{enumerate}
+    \item \textbf{Initial Screening}: Titles and abstracts of the identified articles from the first phase of the search were reviewed to exclude studies that did not meet the inclusion criteria.
+    \item \textbf{Full-Text Review}: The remaining articles were thoroughly reviewed in full to assess their relevance based on the research questions and the fields of interest identified during the search strategy.
+    \item \textbf{Final Selection}: Articles that provided significant insights into SFG were included in the final review.
+\end{enumerate}
+
+\subsection{Inclusion Criteria}
+\begin{itemize}
+    \item Peer-reviewed journal articles, conference papers, and reputable academic publications.
+    \item Studies published in the English language in the last 5 years.
+    \item Paper content is pertinent to the research questions.
+    \item Paper content is pertinent to the SFG topic.
+    \item Paper is either openly accessible or accessible through university credentials.
+\end{itemize}
+Resources that did not meet these parameters were excluded.
+
+\section{Quality Assessment Criteria}
+The following set of quality assessment criteria was applied to the studies that already met the Inclusion Criteria:
+\begin{itemize}
+    \item \textbf{Relevance}: The study’s focus on SFG or its applications in intelligent systems and its alignment with the research questions.
+    \item \textbf{Rigor}: The methodological soundness and robustness of the study, including the clarity of the research design, data collection, and analysis methods.
+    \item \textbf{Contribution}: The significance of the study’s findings to the field of synthetic biometric data generation, including the novelty of the research, the implications of the results, and the contribution to advancing knowledge in the domain.
+    \item \textbf{Clarity}: The clarity and coherence of the study’s presentation and conclusions, including the logical flow of ideas, the transparency of the methodology, and the articulation of findings.
+    \item \textbf{Up-to-date}: The methods and approaches presented in the study are the most recent developments in their category or offer particular contributions or advantages.
+\end{itemize}
+
+\section{Data extraction}
+The data extraction process involved systematically recording relevant information from each selected study. The information extracted includes: title, authors, year of publication, and abstract.
+\begin{itemize} 
+    \item \textbf{Title}: Synthetic Fingerprint Generation: Bridging the Gap Between Privacy and Security with Variational Auto-Encoders\cite{10.1007/978-981-97-7571-2_18}
+    \begin{itemize}
+        \item \textbf{Authors}: Maiti, Diptadip and Basak, Madhuchhanda and Das, Debashis
+        \item \textbf{Year of publication}: 2024
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        This study presents a state-of-the-art technique utilizing Variational Auto-encoders (VAEs) for synthetic fingerprint generation, aiming to strike a balance between privacy and security in biometric systems. The proposed VAE architecture employs an encoder-decoder network to transform raw fingerprint data into a lower-dimensional latent space, enabling the generation of diverse and realistic synthetic fingerprints. The workflow involves encoding raw data, mapping it to the latent space, and then decoding it to produce detailed synthetic representations. The model’s architecture is elucidated, detailing the encoder and decoder components, and their respective parametrizations. The reparameterization trick is employed to address gradient computation challenges during training. The training process involves the minimization of both reconstruction loss and Kullback-Leibler divergence loss, ensuring the generated fingerprints maintain fidelity to the input while adhering to a standard normal distribution in the latent space. The study demonstrates the effectiveness of the proposed VAE through comprehensive results, including reconstruction and KL divergence loss curves. Synthetic fingerprint images are showcased, illustrating the model’s ability to faithfully reconstruct input data. Additionally, the model’s capability to generate diverse synthetic fingerprints by manipulating latent vectors is highlighted. The generated imaged is checked with NFIQ-2 for checking the quality of the image.
+    \end{itemize}
+
+    \item \textbf{Title}: Vikriti-ID: A Novel Approach For Real Looking Fingerprint Data-set Generation\cite{10484524}
+    \begin{itemize}
+        \item \textbf{Authors}: Shukla, Rishabh and Sinha, Aditya and Singh, Vansh and Kaur, Harkeerat
+        \item \textbf{Year of publication}: 2024
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        Fingerprint recognition research faces significant challenges due to the limited availability of extensive and publicly available fingerprint databases. Existing databases lack a sufficient number of identities and fingerprint impressions, which hinders progress in areas such as Fingerprint-based access control. To address this challenge, we present Vikriti-ID, a synthetic fingerprint generator capable of generating unique fingerprints with multiple impressions. Using Vikriti-ID, we generated a large database containing 500000 unique fingerprints, each with 10 associated impressions. We then demonstrate the effectiveness of the database generated by Vikriti-ID by evaluating it for imposter-genuine score distribution and Equal Error Rate (EER) score. Apart from this we also trained a deep network to check the usability of data. We trained the network inspired from [13], on both Vikriti-ID generated data as well as public data. This generated data achieved an EER of 0.16\%, AUC of 0.89\%. This improvement is possible due to the limitations of existing publicly available data sets, which struggle in numbers or multiple impressions.
+    \end{itemize}
+
+    \item \textbf{Title}: DSB-GAN: Generation of deep learning based synthetic biometric data\cite{BAMORIYA2022102267}
+    \begin{itemize}
+        \item \textbf{Authors}: Pankaj Bamoriya and Gourav Siddhad and Harkeerat Kaur and Pritee Khanna and Aparajita Ojha
+        \item \textbf{Year of publication}: 2022
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        Deep learning-based generative networks have brought a significant change in the generation of synthetic biometric data. Synthetic biometric data finds applications in developing biometric systems and testing them on a large amount of data to analyze their performance on extreme load scenarios or run simulation for health care personnel training. Generally, biometric datasets have fewer training samples, due to which deep learning models do not train well. In the proposed DSB-GAN, a generative model based on convolutional autoencoder (CAE) and generative adversarial network (GAN) is used to generate realistic synthetic biometrics for various modalities such as fingerprint, iris, and palmprint. This generated data ensures the availability of data that is not available in general due to various undesired factors like distortion and corruption of data. The model is resource efficient and generates diverse biometric samples as compared to state-of-the-art methods.
+    \end{itemize}
+
+    \item \textbf{Title}: PrintsGAN: Synthetic Fingerprint Generator\cite{9893541}
+    \begin{itemize}
+        \item \textbf{Authors}: Engelsma, Joshua James and Grosz, Steven and Jain, Anil K.
+        \item \textbf{Year of publication}: 2023
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        A major impediment to researchers working in the area of fingerprint recognition is the lack of publicly available, large-scale, fingerprint datasets. The publicly available datasets that do exist contain very few identities and impressions per finger. This limits research on a number of topics, including e.g., using deep networks to learn fixed length fingerprint embeddings. Therefore, we propose PrintsGAN, a synthetic fingerprint generator capable of generating unique fingerprints along with multiple impressions for a given fingerprint. Using PrintsGAN, we synthesize a database of 525k fingerprints (35K distinct fingers, each with 15 impressions). Next, we show the utility of the PrintsGAN generated dataset by training a deep network to extract a fixed-length embedding from a fingerprint. In particular, an embedding model trained on our synthetic fingerprints and fine-tuned on a small number of publicly available real fingerprints (25K prints from NIST SD 302) obtains a TAR of 87.03\% @ FAR=0.01\% on the NIST SD4 database (a boost from TAR=73.37\% when only trained on NIST SD 302). Prevailing synthetic fingerprint generation methods do not enable such performance gains due to i) lack of realism or ii) inability to generate multiple impressions per finger.
+    \end{itemize}
+
+    \item \textbf{Title}: Fingerprint generation and authentication though Adaptive convolution generative adversarial network (ADCGAN)\cite{10178664}
+    \begin{itemize}
+        \item \textbf{Authors}: Mustafa, Syed Muhammad Nabeel and Zehra, Syeda Sundus and Baber, Alina and Siddiqui, Maria Andleeb
+        \item \textbf{Year of publication}: 2023
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        Fingerprints are crucial in identification of humans. The uniqueness of finger prints makes it an interesting subject. Fingerprints are termed as a technique used to define, assess, and quantify a person's physical and behavioral property. Deep learning has made its application in all the major fields such as natural language processing, computer vision and speech processing. Deep learning has also found its application in the important subject of fingerprint synthesis and biometric. The ever-growing complexity of fingerprint authentication issues, from cellphone authentication to airport security systems, seems to be best handled by these models. In recent years, deep learning-based models have been used more and more to raise the accuracy of various fingerprint recognition systems. The persuasive capacity of Generative Adversarial Networks (GANs) to generate believable instances can be credibly taken from an existing distribution of samples. GAN exhibits exceptional performance on data generation-based tasks and also encourages study in privacy and security. In this work, using Adaptive Deep Convolution Generative Adversarial Networks (ADCGAN), we develop a model that generates and authenticate the fingerprints. A Socofing dataset was trained on ADGAN model. The model gave 92\% accuracy. The conduct of fingerprint research has been made possible due to ADGAN, without restrictions related to the confidential nature of biometric data.
+    \end{itemize}
+
+    \item \textbf{Title}: Universal Fingerprint Generation: Controllable Diffusion Model With Multimodal Conditions\cite{10734169}
+    \begin{itemize}
+        \item \textbf{Authors}: Grosz, Steven A. and Jain, Anil K.
+        \item \textbf{Year of publication}: 2025
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        The utilization of synthetic data for fingerprint recognition has garnered increased attention due to its potential to alleviate privacy concerns surrounding sensitive biometric data. However, current methods for generating fingerprints have limitations in creating impressions of the same finger with useful intra-class variations. To tackle this challenge, we present GenPrint, a framework to produce fingerprint images of various types while maintaining identity and offering humanly understandable control over different appearance factors, such as fingerprint class, acquisition type, sensor device, and quality level. Unlike previous fingerprint generation approaches, GenPrint is not confined to replicating style characteristics from the training dataset alone: it enables the generation of novel styles from unseen devices without requiring additional fine-tuning. To accomplish these objectives, we developed GenPrint using latent diffusion models with multimodal conditions (text and image) for consistent generation of style and identity. Our experiments leverage a variety of publicly available datasets for training and evaluation. Results demonstrate the benefits of GenPrint in terms of identity preservation, explainable control, and universality of generated images. Importantly, the GenPrint-generated images yield comparable or even superior accuracy to models trained solely on real data and further enhances performance when augmenting the diversity of existing real fingerprint datasets.
+    \end{itemize}
+
+    \item \textbf{Title}: DiffFinger: Advancing Synthetic Fingerprint Generation through Denoising Diffusion Probabilistic Models\cite{grabovski2024difffingeradvancingsyntheticfingerprint}
+    \begin{itemize}
+        \item \textbf{Authors}: Freddie Grabovski and Lior Yasur and Yaniv Hacmon and Lior Nisimov and Stav Nimrod
+        \item \textbf{Year of publication}: 2024
+        \item \textbf{Abstract}: 
+        \begin{center}
+            \textbf{Abstract}
+        \end{center}
+        This study explores the generation of synthesized fingerprint images using DDPMs. The significant obstacles in collecting real biometric data, such as privacy concerns and the demand for diverse datasets, underscore the imperative for synthetic biometric alternatives that are both realistic and varied. Despite the strides made with Generative Adversarial Networks (GANs) in producing realistic fingerprint images, their limitations prompt us to propose DDPMs as a promising alternative. DDPMs are capable of generating images with increasing clarity and realism while maintaining diversity. Our results reveal that DiffFinger not only competes with authentic training set data in quality but also provides a richer set of biometric data, reflecting true-to-life variability. These findings mark a promising stride in biometric synthesis, showcasing the potential of DDPMs to advance the landscape of fingerprint identification and authentication systems.
+    \end{itemize}
+\end{itemize}
+
+\chapter{Results}
+After data selection and extraction are complete, the information acquired can be utilized to address the research questions.
+
+\section{Q1: How can high quality synthetic fingerprints be obtained?}
+
+\subsection{Variational Auto-Encoders}
+The two key components of the sophisticated generative model called the VAE are the encoder and the decoder. The encoder is responsible for converting input data, including images, into a lower-dimensional, typically fixed-size latent space. This latent space serves as a condensed representation of the incoming data, capturing its essential features. The encoder additionally produces two vectors for each input: the variance and mean of the latent space distribution. Because these vectors are used to sample points in the latent space, a random element is introduced, making VAEs probabilistic models. The decoder, on the other hand, takes these sampled points from the latent space and utilizes them to create synthetic data that closely resembles the original input.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/vae1.png}
+    \caption{Variational auto-encoder-based synthetic fingerprint generation. From \cite{10.1007/978-981-97-7571-2_18}.}
+    \label{fig:vae-gen-process}
+\end{figure}
+
+The re-parametrization tirck, which addresses the issue of back-propagating gradients by sampling, represents a significant advancement in the training of VAEs. The encoder network in a VAE generates the mean and log variance of a latent distribution. Instead of directly sampling from this distribution, which is a non-differentiable process, re-parametrization offers a clear stochastic component. To generate a point in the latent space, it takes a sample from a typical normal distribution and adds it to the mean and standard deviation it received from the encoder. By effectively separating the stochastic from the model's parameters, this technique simplifies the computation of gradients during back-propagation.
+
+Reconstruction loss and Kullback-Leibler (KL) divergence loss are the two loss functions used for the VAE's training and testing (a simple graphic representation in Figure \ref{fig:vae-gen-process}. The discrepancy between the input data and the VAE outputs is measured by the reconstruction loss. The product of the input data's dimensions is used to scale the reconstruction loss.
+\begin{equation}
+\text {reconstruction}\_\text {loss} = \text {MSE}(inputs, outputs) \times \text {input}\_\text {shapes}
+\end{equation}
+where
+\begin{equation}
+\text {MSE} = \frac{1}{n} \sum _{i=1}^{n} (y_i - \hat{y}_i)^2
+\end{equation}
+and denotes the actual or observed value for the i-th data point, the predicted value for the i-th data point, and n is the number of data points. Reconstructing input data accurately and regularizing the latent space distribution are two goals that are combined in KL divergence loss, which penalizes the divergence between the learned latent distribution and a standard normal distribution.
+\begin{equation}
+\text {kl}\_\text {loss} = -0.5 \times \sum (1 + \text {z}\_\text {log}\_\text {var} - (z_{mean} -\exp (\text {z}\_\text {log}\_\text {var}))^2)
+\end{equation}
+The final loss value of the VAE is calculated as:
+\begin{equation}
+\text {vae}\_\text {loss} = \text {mean}(B \times \text {reconstruction}\_\text {loss} + \text {kl}\_\text {loss})
+\end{equation}
+
+The outcomes described in \cite{10.1007/978-981-97-7571-2_18} shows that the trade-off between reconstruction accuracy and latent space diversity in VAEs frequently results in generated samples that lack fine features or are fuzzy. The creation of realistic, high-fidelity results is hampered by this intrinsic uncertainty.
+
+\subsection{Vikriti-ID}
+Vikriti-ID breaks down the synthesis into multiple phases, each of which focuses on modeling differences between classes, as opposed to immediately mapping random signals to fingerprints using a single GAN. Vikriti-ID creates an intermediate picture using VAE, which serves as the pipeline's starting point. Lastly, it creates a unique ID by simulating the impact of a real fingerprint using the Vikriti-ID GAN.
+Lastly, several realistic-looking impressions of this generated UniqueID are produced using the Vikriti-ID Impression generator.
+
+The method suggested in \cite{10484524} creates realistic-looking fingerprints by following a series of stages (Figure \ref{fig:vikriti-train} and Figure \ref{fig:vikriti-gen}). The following is a summary of the steps:
+\begin{itemize}
+    \item VAEs are used for intermediate image generation from a noise matrix MN.
+    \item Generation of a unique fingerprint identity  with the proposed Vikriti-ID.
+    \item The last step employs the module of an impression generator (IG) to generate various modules of the unique fingerprint identity.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/vikriti-train.png}
+    \caption{Training process of Vikriti-ID (Taking input as an random matrix and generating intermediate image by variational auto-encoder, which passes to generator model to generate unique identity with the help of discriminator). From \cite{10484524}.}
+    \label{fig:vikriti-train}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/vikriti-gen.png}
+    \caption{Illustration of Vikrit-ID generating impressions from the random noise matrix. From \cite{10484524}.}
+    \label{fig:vikriti-gen}
+\end{figure}
+
+
+\subsection{Deep leaning based Synthetic Biometric GAN (DSB-GAN)}
+In the DSB-GAN framework\cite{BAMORIYA2022102267}, a Class Attention Encoder (CAE) is employed to generate augmented biometric data from modalities like fingerprints, palmprints, and irises. The CAE produces biometric samples that mimic original data, which, along with artificial samples from the DSB-GAN generator, is combined with original biometric samples for training. This method enhances the dataset size, improving accuracy in generating synthetic biometric samples, which remain similar yet diverse compared to originals. The DSB-GAN is characterized as lightweight and effectively leverages both original and augmented data for enhanced training outcomes. The flowchart of the proposed method is shown in Figure \ref{fig:dsb-gan}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/dsb-gan.png}
+    \caption{DSB-GAN method flowchart. From \cite{BAMORIYA2022102267}.}
+    \label{fig:dsb-gan}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/dsb-gan-table.png}
+    \caption{DSB-GAN as compared with other GANs in terms of quantitative parameters (at 95\% confidence interval). From \cite{BAMORIYA2022102267}.}
+    \label{fig:dsb-gan-table}
+\end{figure}
+
+Two metrics — the multi-scale structural similarity index (MS-SSIM) and the Fréchet inception distance (FID) — have been used to assess the DSB-GAN's performance.  The resulting images' quality is assessed using the FID metric.  An improved version of SSIM called MS-SSIM is used to measure perception or structural data at different scales.  It falls between 0 and 1, with 1 representing perfect structural similarity.  Here, a low FID indicates that the images produced are similar to the original samples, while a low MS-SSIM indicates that the samples produced by DSB-GAN are diverse and highly variable.
+As we can see in Table \ref{fig:dsb-gan-table}, this approach obtains better performance than other GANs with less parameters.
+
+
+\subsection{PrintsGAN}
+PrintsGAN\cite{9893541} synthesizes fingerprints through multiple steps. Firstly, a binary Master-Print $I_{ID} \in \{0; 1\}^{256 \times 256}$ is generated using a random noise vector $z_{ID} \in \mathbb{R}^{512}$, where $z$ is drawn from a continuous uniform distribution $U(0, 1)$ to create a new fingerprint identity. In Figure \ref{fig:prints-gan}. Next, $I_{ID}$ along with a warping noise vector $z_{distort} \in \mathbb{R}^{16}$ is passed to a non-linear Thin-Plate-Spline (TPS) warping module and cropping GAN $D_W (E_W (I_{ID}))$ to produce a warped Master-Print $I_{w}$. Finally, $I_{w}$ is passed to a renderer $R_D (R_E (I_{w}))$ along with a texture noise vector $z_{texture} \in \mathbb{R}^{128}$ to impart textural details to the final fingerprint $I_{r}$. Thus, by selecting different $z_{ID}$, it can generate many unique fingerprints. Likewise, by fixing $z_{ID}$, and selecting different $z_{distort}$ and $z_{texture}$, it can generate different impressions of the same fingerprint. Each of these steps are elaborated upon in the subsections below.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/prints-gan.png}
+    \caption{Schematic of PrintsGAN. It operates in two stages. In the first stage, a Master-Print, or a new identity is generated. A Master-Print is a binarized friction ridge pattern at 250 ppi. After synthesizing a Master-Print, it is passed to a non-linear warping and cropping module to simulate the effects of pressing the finger against a fingerprint reader platen at different roll, pitch, yaw, and degree of pressure. Finally, this warped and cropped Master-Print is passed to the second stage of the synthesis process where it is rendered with realistic textural details at 500 ppi. By passing different identity noise $z_{ID}$, distortion noise $z_{distort}$, and texture noise ($z_{texture}$), PrintsGAN is able to generate many fingerprint identities as well as impressions for each identity. In this way, PrintsGAN models both the inter-class and intra-class variance of a large fingerprint database. From \cite{9893541}.}
+    \label{fig:prints-gan}
+\end{figure}
+
+In the first step in the synthesis process the GAN is trained in accordance with the classic adversarial loss:
+\begin{equation}
+\mathcal {L}_{adv}(G_{I}, Disc_{ID}) &= \mathbb {E}_{x}~[logDisc_{ID}(x)]\\ 
+& \quad + \mathbb {E}_{z}~[log(1-Disc_{ID}(G_{I}(z)))] \tag{1}
+\end{equation}
+where \textit{x} is a binary fingerprint extracted from a real fingerprint.
+
+Given a raw fingerprint $I_{raw}$, it uses an auto-encoder $R(\cdot)$ to learn a mapping from $I_{raw}$ to a ground-truth binarized fingerprint $I_{binary}$ via an $L$-2 loss function:
+\begin{equation}
+\mathcal {L}_{recon} = |R(I_{raw}) - I_{binary}|_{2}^{2}. \tag{2}
+\end{equation}
+
+
+\subsection{DiffFinger}
+The DiffFinger model presented in \cite{grabovski2024difffingeradvancingsyntheticfingerprint} is based on classic DDPM architecture, but to create different fingerprint impressions the authors exploited the capabilities of their DDPM in a unique manner.
+
+The goal of DiffFinger generative process was to produce sets of fingerprints that represent the same identity notwithstanding their differences. To do this, the approach makes use of DDPM's backward diffusion process in a novel way.
+Initializing an image that is solely noise-based is the first step in the process.  This image is then partially denoised up to a certain time step \textit{d}, at which point they pause before moving on to the final reconstruction process. This intermediate image creates a distinct fingerprint identification even though it is still partially veiled by noise. Then the denoising procedure from \textit{t=d} to \textit{t=0} repeated in order to produce several impressions of this identity.  Because the DDPM is stochastic, every cycle produces a slightly different image, resulting in variations of the same fingerprint identification.
+
+The advantagies of the proposed DDPM-based approach for fingerprint generation compared to the limitations of GANs can be seen below:
+\begin{itemize}
+    \item Overcoming Mode Collapse: Ensuring diverse and realistic fingerprint production is a crucial component of the process. Nevertheless, mode collapse can occur with GANs, causing them to primarily produce samples from particular areas of the distribution of training data. On the other hand, because of their noise-driven training procedure, DDPMs naturally prevent mode collapse.
+    \item Enhancing Realism and Capturing Variability: Creating fingerprints with a high degree of realism and reflecting the inherent diversity of real-world data is another crucial necessity. By iteratively improving noise under the guidance of the learnt data distribution, DDPMs excel in this area. This produces statistically comparable samples that are more realistic, especially when it comes to minute characteristics like ridges. DDPMs are better at modeling these fine-grained characteristics than GANs, which results in the creation of more varied and lifelike fingerprints.
+    \item Potential for Explainability: In machine learning models, explainability is becoming more and more important. DDPMs' intrinsic diffusion process presents a special opportunity to comprehend the model's decision-making. We may learn more about the variables affecting the produced fingerprints by examining the noise prediction and removal processes.
+\end{itemize}
+
+
+\subsection{GenPrint}
+Using weights from the Diffusers library, GenPrint\cite{10734169} is a multimodal latent diffusion model optimized for fingerprint generation from a pretrained Stable Diffusion model (v1.5). To put it succinctly, this study's contributions are as follows:
+\begin{itemize}
+    \item GenPrint is a customizable latent diffusion model that generates a wide variety of realistic-looking synthetic fingerprints by utilizing text and image circumstances.
+    \item Without any further fine-tuning (e.g., zero-shot fingerprint style generation), GenPrint may generate fingerprints of any acquisition type, sensor, fingerprint class, and quality, including fingerprint styles that were not observed during training.
+    \item With language cues that are easy for humans to understand, the generating process is explicable and controllable (in terms of look and identity retention).
+\end{itemize}
+
+Following, the elements that compose the pipeline of GenPrint (visible in Figure \ref{fig:genprint}) and that are described carefully in \cite{10734169}:
+\begin{itemize}
+    \item \textbf{Control Factors via Text Conditions}: Acquiring a sizable corpus of fingerprint photos and related text descriptions is the first stage in optimizing Stable Diffusion for text to fingerprint synthesis. The low-rank adaptation (LoRA) strategy was adopted for more efficient training.
+    \item \textbf{Zero-Shot Style Generation}: Specifically, they embed style embeddings for every training image using a pretrained VGG model that was trained on ImageNet. Cross-attention layers are utilized to inject these style embeddings into the diffusion model. These layers are decoupled from the textual embeddings that regulate the explainable style components, meaning they have their own cross-attention layers.
+    \item \textbf{Fingerprint Identity Preservation}: The silhouettes of the ridge flow patterns that give birth to the relative orientation of each finger's minutiae points are the identity discriminative aspects of fingerprints that remain constant across a variety of acquisition and sensor types.  With the adjustment of pre-pending a pre-trained ridge extraction module as the initial layers of our identity preserving diffusion model, ID-Net, they propose that ControlNet\cite{zhang2023addingconditionalcontroltexttoimage} is a good option for implementing the DDPM model with identity preservation of the fingerprint ridges.  The input fingerprint control image is stripped of sensor-dependent and other style elements by these layers, leaving only the ridge pattern silhouette image to direct the spatial preservation of the fingerprint identification.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint.png}
+    \caption{Overview of the architecture and generation process of GenPrint. GenPrint consists of a two-stage generation process. In the first stage, a reference identity (ID) fingerprint image is generated from a random noise vector and an input text prompt controlling the quality, class, acquisition, and sensor type of the generated fingerprint by a fine-tuned Stable Diffusion model. The second stage then generates M impressions of that reference ID fingerprint via ID-Net, a trained ControlNet model which removes the style characteristics of the input reference ID image and replaces the style with the supplied text prompts and/or style embeddings from M reference style images/prompts. During training, the weights of the VGG Style Encoder, Text Encoder, and the decoupled cross-attention layers of the text embeddings are kept frozen, denoted by the lock symbol in the figure. From \cite{10734169}.}
+    \label{fig:genprint}
+\end{figure}
+
+There are two steps in the entire GenPrint generating pipeline.  First, a random noise vector is utilized to create entire (i.e., rolled) fingerprint images of different fingerprint classes using the optimized stable diffusion model.  While the specific sensor type and fingerprint class patterns can be randomly sampled to increase diversity in the generated dataset, the key component of the text prompt in stage one is that they only include high quality rolled images so that the model has the complete fingerprint ridge pattern to work with in the second stage.
+
+Because the ControlNet component of the ID-Net model would alter the input fingerprint pattern provided as the ControlNet input, it would not result in true non-linear distortions to the output photos. In order to apply realistic distortion grids to the ControlNet image for every generation, they are randomly sampled. By calculating the minute displacements between real fingerprint pairs in the training dataset, these realistic distortion grids are produced. An example distortion grid is sampled and applied to the input reference image during inference. This grid is indexed by the designated fingerprint acquisition type.
+
+
+\section{Q2: What benefits does SFG provide in the creation of intelligent systems?}
+In this section, different data are provided to demonstrate the benefits derived from SFG in the construction of intelligent systems.
+
+Starting by presenting the performance obtained by the deep network model\cite{10484524}, trained on Vikriti-ID data and publicly available datasets, which achieved an impressive EER, between False Match Rate (FMR) and False Non-Match Rate (FNMR), of 0.16\% and AUC of 0.9, as shown in Table \ref{fig:vikriti-table}, demonstrating a very good usability. The generated dataset is used for the training of the model and the real one for the fine-tuning.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/vikriti-table.png}
+    \caption{Comparison of performance between Vikriti-ID and other publicly available datasets using MCC matcher. From \cite{10484524}.}
+    \label{fig:vikriti-table}
+\end{figure}
+
+Another example of authentication accuracy increment achieved pre-training the model on synthetically generated dataset and fine-tining it on real ones can be seen in Table \ref{fig:prints-gan-table}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/prints-gan-table.png}
+    \caption{Authentication accuracy comparative using different training sets. From \cite{9893541}.}
+    \label{fig:prints-gan-table}
+\end{figure}
+
+By augmenting training datasets with synthetic fingerprints from PrintsGAN\cite{9893541}, the authentication performance and identification accuracy of deep network models improved significantly. A comparison of a DeepPrint model trained only on NIST SD 302 data against one pretrained on PrintsGAN images (Figure \ref{fig:prints-gan-graph}) showed an increase in closed-set identification accuracy. The model combining NIST SD 302 and PrintsGAN achieved a rank 1 identification rate of 92.05\%, up from 85.90\% with NIST SD 302 alone. Additionally, using 100k synthetic fingerprints from PrintsGAN for gallery augmentation yielded performance comparable to that of using 100k real fingerprints, confirming the utility of synthetic prints for large-scale fingerprint recognition benchmarking.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/prints-gan-graph.png}
+    \caption{Closed-set identification accuracy of DeepPrint models trained on NIST SD 302 (N2N) data only versus. NIST SD 302 (N2N) + PrintsGAN data. The various curves shown are comparing the search performance of these two models on i.) SD4, ii.) SD4 augmented with 100k Real fingerprint images, and iii.) SD4 augmented with 100k PrintsGAN fingerprints. Best viewed in color. From \cite{9893541}.}
+    \label{fig:prints-gan-graph}
+\end{figure}
+
+Now we analyze the most recent SFG present in the literature, GenPrint\cite{10734169}. The authors used a pre-trained AFR-Net\cite{grosz2022afrnetattentiondrivenfingerprintrecognition} fingerprint recognition model to calculate authentic and impostor score distributions for both the test split of NIST SD302 and the dataset generated by GenPrint. The results are displayed in Figure \ref{fig:genprint-similarity}, which illustrates how the score distributions of the generated and real datasets are identical. Since NIST SD302 includes several of the various acquisition types (rolling, slap, and contactless) that GenPrint is taught to do, we selected it for this comparison. The overlap in the distributions when compared to the actual fingerprint dataset shows how realistic GenPrint-generated photos are. The real and synthetic datasets' identification performance is likewise quite similar, confirming the identity retention of later synthetic photographs of the same finger that provide high genuine and low impostor similarities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint-similarity.png}
+    \caption{AFR-Net similarity score distributions for NIST SD302 real dataset and similar GenPrint dataset. From \cite{10734169}.}
+    \label{fig:genprint-similarity}
+\end{figure}
+
+GenPrint is trained to accommodate via text prompts, including control over the fingerprint class, acquisition, sensor, and quality level, providing a high control degree over fingerprint generation.
+
+Moreover, the ability of synthetic fingerprint generators to train fingerprint recognition models is one of the most crucial standards for their quality. The authors assess GenPrint's usefulness both when training only on artificially created images and when adding synthetic data to a collection of real fingerprints. As baselines, they compare with a number of earlier synthetic fingerprint generators, such as SFinGe, PrintsGAN, and FPGAN-Control. In Table \ref{fig:genprint-accuracy-mixed} are presented the accuracy scores obtained by ResNet50\cite{he2015deepresiduallearningimage} with True Acceptance Rate (TAR) and False Acceptance Rate (FAR) set to 0.1\%, trained on dataset augmented using different generators. Figure \ref{fig:genprint-graph-mixed} displays the outcome of adding GenPrint impressions to MSP\cite{doi:10.1073/pnas.1410272112}. The graphs demonstrate that GenPrint does, in fact, greatly enhance performance by increasing the diversity of the pre-existing fingerprint photos as the number of identities rises. This gain is especially noticeable when the test datasets include sensor characteristics (such contactless and latent fingerprints) that GenPrint can synthesize but were not present in the original MSP dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint-accuracy-mixed.png}
+    \caption{Authentication Accuracy (TAR At FAR=0.1\%) of ResNet50 trained on a combination of real and synthetic data from FPGAN-Control and the proposed GenPrint evaluated on six different test scenarios. From \cite{10734169}.}
+    \label{fig:genprint-accuracy-mixed}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint-graph-mixed.png}
+    \caption{Authentication accuracy (TAR at FAR=0.1\%) of ResNet50 trained on a combination of real and synthetic data from FPGAN-Control and the proposed GenPrint evaluated on six different test scenarios. From \cite{10734169}.}
+    \label{fig:genprint-graph-mixed}
+\end{figure}
+
+
+\section{Q3: What generalization capabilities a system trained solely on synthetic fingerprints can reach?}
+In this section only information coming from \cite{10734169} are riported and analyzed, because in this paper are reported data relative to other approaches of SFG.
+
+In Table \ref{fig:genprint-accuracy-only-gen} are presented the authentication accuracy obtained by the same deep neural network trained on different synthetic dataset made up using various generators. It can be noted that GenPrint allows the model to obtain the best performance in the batch, even better than the ones obtained using a real dataset.
+
+It is evident from Figure \ref{fig:genprint-graph-only-gen} that the recognition model trained on GenPrint images outperforms all baseline synthetic methods and, as the number of synthetic identities increases, even outperforms training on the actual N2N fingerprint dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint-accuracy-only-gen.png}
+    \caption{Authentication Accuracy (TAR At FAR=0.1\%) of ResNet50 Trained on Synthetic Data from various fingerprint generators including the proposed GenPrint. From \cite{10734169}.}
+    \label{fig:genprint-accuracy-only-gen}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/genprint-graph-only-gen.png}
+    \caption{Authentication accuracy (TAR at FAR=0.1\%) of ResNet50 trained on synthetic data from various fingerprint generation methods including the proposed GenPrint. From \cite{10734169}.}
+    \label{fig:genprint-graph-only-gen}
+\end{figure}
+
+\section{Q4: Does synthetic generated datasets affect data privacy?}
+Avoid leakage of data is a key factor when generating synthetic fingerprint because generated samples have to be statistically distinct from real samples, ensuring that the use of synthetic data preserves the privacy of real identities.
+
+In the paper of Vikriti-ID\cite{10484524} and of GenPrint\cite{10734169} some measurement of identity leakage are described. The authors of Vikriti-ID calculated match scores between 1000 training fingerprint samples, randomly selected between 50000 samples, and 1000 unique IDs of actual generated database, in order to reduce time and computation load. As reported in Figure \ref{fig:vikriti-table}, they got an EER of 0.01\%, indicating that the model can preserve the original IDs.
+
+Using a pre-trained AFR-Net fingerprint recognition model, the authors of GenPrint generated 35000 distinct synthetic fingerprint identities and calculated similarity scores to each of the 37351 real training finger IDs in their training dataset in order to gauge the possible identity leaking of their model. Only 10 (0.03\%) of these 35000 fake identities got a similarity score with any training identity higher than 0.231, which is the true match criterion calculated on FVC 2002 DB1A at FAR=0.01\%. Moreover, the maximum similarity score attained was only 0.297, just marginally above the barrier, even among those 10 similarity values that were above the threshold.
+
+Also for PrintsGAN\cite{9893541} was made a similar analysis and it was found that only 0.04\% of the database has some minimal degree of information leakage.
+
+\chapter{Conclusions}
+Advanced deep learning models are essential for quality: Modern deep learning architectures are the most effective way to create realistic, high-quality synthetic fingerprints. GANs (e.g. PrintsGAN, DSB-GAN) and particularly more recent DDPMs (e.g. GenPrint, DiffFinger) are demonstrated to be more successful than VAEs. In particular, diffusion models effectively overcome typical GAN drawbacks like mode collapse and yield incredibly realistic outcomes.
+
+Novelty and controllability are achievable: The more sophisticated models, like GenPrint, provide substantial, comprehensible control over the generation process. This enables text prompts to be used to provide characteristics such as fingerprint class, quality, and sensor type. A significant benefit is that these models can even produce unique fingerprint patterns that were not observed during training (a process known as "zero-shot style generation").
+
+System performance is significantly improved by synthetic data: As a data augmentation tool, SFG offers enormous advantages. The review demonstrates that pre-training models on synthetic data and fine-tuning them on actual data, or adding synthetic samples to real datasets, results in significant and quantifiable gains in identification performance and authentication accuracy.
+
+Synthetic data enhances model robustness: SFG enables intelligent systems to be trained on a greater range of data than is frequently accessible in real-world datasets by creating large and varied datasets. This enhances the robustness and generalization capabilities of the system, especially when it comes to managing various sensor kinds, acquisition techniques (such contactless and latent), and quality levels.
+
+Synthetic generation effectively preserves privacy: The review finds that the best techniques are successful in protecting privacy, which is a major motivator for SFG. Analyses present in the paper taken into account reveal very little to no identity leakage. The privacy and security issues connected with gathering and utilizing actual biometric data are reduced since the generated fingerprints are statistically different from the genuine identities in the training data.
+
+In conclusion, SFG has demonstrated great potencial when enployed for training intelligent systems for different tasks related to fingerprint, solving data scarsity and variability needings. SFG techniques and their continuous evolution hold promise for practical applications and future research advancements.
+
+
+
+\backmatter	
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{unsrtnat}
+\bibliography{bibliography}
+
+\end{document}
